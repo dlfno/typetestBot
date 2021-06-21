@@ -1,0 +1,4 @@
+venv/
+credentials.txt
+geckodriver.log
+
