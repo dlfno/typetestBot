@@ -27,39 +27,40 @@ def enter_text(driver, elem, text, delay=0):
 while True:
   driver = webdriver.Firefox()
   driver.maximize_window()
-  driver.get('https://typetest.io/signup')
-  username, password, email = generateRandomChars(characters, 8, 3)
+  # driver.get('https://typetest.io/signup')
+  # username, password, email = generateRandomChars(characters, 8, 3)
 
-  email += "@gmail.com"
+  # email += "@gmail.com"
 
-  for elem, credential in zip(["username", "email", "password"], [username, email, password]):
-    sleep(2)
-    enter_text(driver, f'input#{elem}', credential)
-
-  sleep(2)
-  enter_text(driver, "input#password", Keys.ENTER)
-
-  with open('accounts.txt', 'a+') as f:
-    for credential in [username, password, email]:
-      f.write(f'{credential}\n')
-    f.write('\n')
-
-  # driver.get('https://typetest.io/login')
-
-  # with open('credentials.txt', 'r+') as f:
-  #   email, password, *_ = f.read().split('\n')
-
-  # email_elem = driver.find_element_by_css_selector("input#email")
-  # email_elem.send_keys(email)
+  # for elem, credential in zip(["username", "email", "password"], [username, email, password]):
+  #   sleep(2)
+  #   enter_text(driver, f'input#{elem}', credential)
 
   # sleep(2)
+  # enter_text(driver, "input#password", Keys.ENTER)
 
-  # password_elem = driver.find_element_by_css_selector("input#password")
-  # password_elem.send_keys(password, Keys.ENTER)
+  # with open('accounts.txt', 'a+') as f:
+  #   for credential in [username, password, email]:
+  #     f.write(f'{credential}\n')
+  #   f.write('\n')
 
-  # driver.get('https://www.typetest.io')
+  driver.get('https://typetest.io/login')
 
-  sleep(7)
+  with open('credentials.txt', 'r+') as f:
+    email, password, *_ = f.read().split('\n')
+
+  email_elem = driver.find_element_by_css_selector("input#email")
+  email_elem.send_keys(email)
+  sleep(2)
+
+  password_elem = driver.find_element_by_css_selector("input#password")
+  password_elem.send_keys(password)
+
+  password_elem.send_keys(Keys.ENTER)
+  sleep(2)
+  driver.get('https://www.typetest.io')
+
+  sleep(5)
 
   try:
     driver.find_element_by_css_selector("span[value='10000']").click()
@@ -82,7 +83,7 @@ while True:
         test_input.send_keys(letter)
         if random.randint(0, 35) == 0:
           test_input.send_keys(f"{random.choice(string.ascii_letters)}")
-        sleep(random.randint(1, 10) / 5000)
+        sleep(random.randint(1, 10) / 999)
       test_input.send_keys(" ")
       #   # sleep(letterSpeed)
 
